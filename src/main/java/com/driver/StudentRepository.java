@@ -65,10 +65,32 @@ public class StudentRepository {
         return student;
     }
     public static void removeteacherdb(String teachername){
+        List<String> list=new ArrayList<>();
+        if(stdb.containsKey(teachername)){
+            list=stdb.get(teachername);
+        }
+        for(String x:list){
+            if(studentDB.containsKey(x)){
+                studentDB.remove(x);
+            }
+        }
+        stdb.remove(teachername);
         TeacherDB.remove(teachername);
     }
     public static void removeallteacherdb(){
-        TeacherDB.clear();
+      for(String s: TeacherDB.keySet()){
+          if(stdb.containsKey(s)){
+              List<String> x=stdb.get(s);
+              for(String student: x){
+                  if(studentDB.containsKey(student)){
+                      studentDB.remove(student);
+                  }
+              }
+          }
+
+      }
+      stdb.clear();
+      TeacherDB.clear();
     }
 
 
